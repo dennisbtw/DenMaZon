@@ -62,55 +62,51 @@ const CreateProduct = () => {
       }
 
       return (
-        <div className="create-product-container">
-          <div className="product-form-container">
-            <h1 className="create-product-header">Create a New Product</h1>
-            <form onSubmit={handleSubmit} className="product-form" encType="multipart/form-data">
-              <div className="form-el">
-                <label htmlFor="productName">Product Name</label>
+        <div>
+          <div>
+            <h1>Create a New Product</h1>
+            <form onSubmit={handleSubmit} encType="multipart/form-data">
+              <div>
+                <label>Product Name</label>
                 <input
                   id="productName"
                   type="text"
-                  className="product-input"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   />
-                  {submitted && errors.name && <p className="error" style={{ color: 'red' }}>{errors.name}</p>}
+                  {submitted && errors.name && <p style={{ color: 'red' }}>{errors.name}</p>}
               </div>
-              <div className="form-el">
-                <label htmlFor="productImage">Product Image</label>
+              <div>
+                <label>Product Image</label>
                 <input
                   id="productImage"
                   type="file"
                   accept="image/*"
-                  className="product-input"
                   onChange={(e) => setImage(e.target.files[0])}
                   />
-                  {submitted && errors.image && <p className="error" style={{ color: 'red' }}>{errors.image}</p>}
+                  {submitted && errors.image && <p style={{ color: 'red' }}>{errors.image}</p>}
               </div>
-              <div className="form-el">
-                <label htmlFor="productDescription">Product Description</label>
+              <div>
+                <label>Product Description</label>
                 <textarea
                   id="productDescription"
-                  className="product-input"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   />
-                  {submitted && errors.description && <p className="error" style={{ color: 'red' }}>{errors.description}</p>}
+                  {submitted && errors.description && <p style={{ color: 'red' }}>{errors.description}</p>}
               </div>
-              <div className="form-el">
-                <label htmlFor="productPrice">Product Price</label>
+              <div>
+                <label>Product Price</label>
                 <input
                   id="productPrice"
                   type="number"
-                  className="product-input"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   />
-                  {submitted && errors.price && <p className="error" style={{ color: 'red' }}>{errors.price}</p>}
+                  {submitted && errors.price && <p style={{ color: 'red' }}>{errors.price}</p>}
               </div>
-              <div className="create-product-button">
-                <button type="submit" className="product-butt">Create Product</button>
+              <div>
+                <button type="submit">Create Product</button>
               </div>
             </form>
           </div>

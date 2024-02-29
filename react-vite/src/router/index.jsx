@@ -5,6 +5,7 @@ import Layout from './Layout';
 import HomePage from '../components/HomePage/HomePage';
 import ProductDetail from '../components/ProductDetail/ProductDetail';
 import CreateProduct from '../components/CreateProduct/CreateProduct';
+import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
 export const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
       {
         path: "new-product",
         element: <CreateProduct />
+      },
+      {
+        path: "products/:productId/edit",
+        element: <UpdateProduct/>
       }
     ],
   },

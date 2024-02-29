@@ -1,7 +1,11 @@
+// action types
+
 const LOAD_PRODUCTS = 'product/loadProducts';
 const LOAD_ONE_PRODUCT ='product/loadOneProduct';
 const CREATE_PRODUCT = 'product/CREATE_PRODUCT';
+const UPDATE_PRODUCT = 'product/UPDATE_PRODUCT';
 
+// action creators
 
 const loadProducts = (products) => ({
     type: LOAD_PRODUCTS,
@@ -18,6 +22,15 @@ const createProduct = (product) => ({
     product
 })
 
+const updateProduct = (product) => ({
+    type: UPDATE_PRODUCT,
+    product
+})
+
+// thunks
+
+// get all
+
 export const loadProductsThunk = () => async (dispatch) => {
     const response = await fetch('/api/products')
 
@@ -28,6 +41,8 @@ export const loadProductsThunk = () => async (dispatch) => {
     }
 }
 
+// get one
+
 export const loadOneProductThunk = (productId) => async (dispatch) => {
     const response = await fetch(`/api/products/${productId}`)
 
@@ -37,6 +52,8 @@ export const loadOneProductThunk = (productId) => async (dispatch) => {
         return data
     }
 }
+
+// create
 
 export const createProductThunk = (product) => async (dispatch) => {
     const response = await fetch('/api/products/new-product', {
@@ -49,6 +66,22 @@ export const createProductThunk = (product) => async (dispatch) => {
         return data
     }
 }
+
+// update
+
+export const updateProductThunk = (product, productId) => async (dispatch) => {
+    const response = await fetch(`/api/products/${productId}/edit`, {
+        method: 'PUT',
+        body: product
+    })
+    if (response.ok){
+        const data = await response.json();
+        dispatch(updateProduct(data))
+        return data
+    }
+}
+
+// reducer
 
 const initialState = {}
 
@@ -68,6 +101,12 @@ const productReducer = (state = initialState, action) => {
             };
         }
         case CREATE_PRODUCT:{
+            return {
+                ...state,
+                [action.product.id]: action.product
+            };
+        }       
+        case UPDATE_PRODUCT:{
             return {
                 ...state,
                 [action.product.id]: action.product

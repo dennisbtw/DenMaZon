@@ -50,7 +50,7 @@ def updateProduct(productId):
         product = Product.query.get(productId)
         data = form.data
 
-        if 'image' in data and data['image'] is not None:
+        if 'image' in request.files:
             image_filename = get_unique_filename(data['image'].filename)
             image_upload_result = upload_file_to_s3(data['image'])
             if 'url' in image_upload_result:

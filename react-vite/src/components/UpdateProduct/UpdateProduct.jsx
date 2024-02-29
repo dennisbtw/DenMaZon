@@ -1,38 +1,58 @@
-import { createProductThunk } from "../../redux/product";
-import { useDispatch, useSelector} from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import './CreateProduct.css';
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { updateProductThunk, loadOneProductThunk } from "../../redux/product";
+import './UpdateProduct.css';
 
-const CreateProduct = () => {
+const UpdateProduct = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [name, setName] = useState('')
-    const [image, setImage] = useState('')
-    const [description, setDescription] = useState('')
-    const [price, setPrice] = useState('')
-    const [errors, setErrors] = useState({})
-    const [submitted, setSubmitted] = useState(false)
-    const user = useSelector(state => state.session.user)
+    const { productId } = useParams();
+    const product = useSelector(state => state.products[productId]);
+    const user = useSelector(state => state.session.user);
+    const [name, setName] = useState('');
+    const [image, setImage] = useState(null);
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
+    const [errors, setErrors] = useState({});
+    const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
+        dispatch(loadOneProductThunk(productId));
+    }, [dispatch, productId]);
+
+    useEffect(() => {
+        if (product) {
+            setName(product.name || '');
+            setDescription(product.description || '');
+            setPrice(product.price?.toString() || '');
+        }
+    }, [product]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitted(true);
+        
         const validationErrors = {};
 
-        if (!name.length) {
+        if (!name) {
             validationErrors.name = "Name is required";
         } else if (name.length > 200) {
             validationErrors.name = "Name is too long";
         }
 
-        if (!image) {
-          validationErrors.image = "Image is required";
-        } else if (typeof image === 'object' && image.name) {
-          if (!image.name.endsWith('.jpeg') && !image.name.endsWith('.jpg') && !image.name.endsWith('.png') && !image.name.endsWith('.gif')) {
-              validationErrors.image = 'Image must be in .jpeg, .jpg, .png, or .gif format';
-          }
+        if (!image && submitted) { 
+            validationErrors.image = "Image is required";
+        } else if (image && !(image instanceof File)) {
+            validationErrors.image = "An image file must be selected";
+        } else if (image instanceof File) {
+            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+            if (!validTypes.includes(image.type)) {
+                validationErrors.image = 'Image must be in .jpeg, .jpg, .png, or .gif format';
+            }
         }
 
-        if (!description.length) {
+        if (!description) {
             validationErrors.description = "Description is required";
         } else if (description.length > 255) {
             validationErrors.description = "Description is too long";
@@ -45,31 +65,31 @@ const CreateProduct = () => {
         }
 
         setErrors(validationErrors);
-    }, [name, image, description, price]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-    
-        setSubmitted(true)
-    
-        if (!Object.values(errors).length) {
-          const formData = new FormData();
-          formData.append("user_id", user.id);
-          formData.append("name", name);
-          formData.append("image", image);
-          formData.append("description", description);
-          formData.append("price", price);
-
-    
-          const product = await dispatch(createProductThunk(formData))
-          navigate(`/products/${product.id}`)
+        if (Object.keys(validationErrors).length === 0) {
+            const formData = new FormData();
+            formData.append("user_id", user?.id || ''); 
+            formData.append("name", name);
+            formData.append("description", description);
+            formData.append("price", price);
+            
+            if (image instanceof File) {
+                formData.append("image", image);
+            }
+            
+            const updatedProduct = await dispatch(updateProductThunk(formData, productId));
+            
+            if (!updatedProduct.errors) {
+                navigate(`/products/${productId}`);
+            }
         }
-      }
+    };
+
 
       return (
         <div>
           <div>
-            <h1>Create a New Product</h1>
+            <h1>Update Product</h1>
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               <div>
                 <label>Product Name: </label>
@@ -111,7 +131,7 @@ const CreateProduct = () => {
                   {submitted && errors.price && <p style={{ color: 'red' }}>{errors.price}</p>}
               </div>
               <div>
-                <button type="submit">Create Product</button>
+                <button type="submit">Update Product</button>
               </div>
             </form>
           </div>
@@ -119,4 +139,4 @@ const CreateProduct = () => {
       );
     };
     
-    export default CreateProduct;
+    export default UpdateProduct;

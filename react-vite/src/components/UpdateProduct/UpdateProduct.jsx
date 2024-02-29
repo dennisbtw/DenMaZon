@@ -1,90 +1,84 @@
+import { loadOneProductThunk, updateProductThunk } from "../../redux/product";
+import { useDispatch, useSelector} from "react-redux";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { updateProductThunk, loadOneProductThunk } from "../../redux/product";
 import './UpdateProduct.css';
 
 const UpdateProduct = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { productId } = useParams();
-    const product = useSelector(state => state.products[productId]);
-    const user = useSelector(state => state.session.user);
-    const [name, setName] = useState('');
-    const [image, setImage] = useState(null);
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
-    const [errors, setErrors] = useState({});
-    const [submitted, setSubmitted] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { productId } = useParams();
+  const product = useSelector(state => state.products[productId]);
+  const [name, setName] = useState('');
+  const [image, setImage] = useState(null);
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const user = useSelector(state => state.session.user);
 
-    useEffect(() => {
-        dispatch(loadOneProductThunk(productId));
-    }, [dispatch, productId]);
+  useEffect(() => {
+      if (productId) {
+          dispatch(loadOneProductThunk(productId));
+      }
+  }, [dispatch, productId]);
 
-    useEffect(() => {
-        if (product) {
-            setName(product.name || '');
-            setDescription(product.description || '');
-            setPrice(product.price?.toString() || '');
-        }
-    }, [product]);
+  useEffect(() => {
+      if (product) {
+          setName(product.name);
+          setDescription(product.description);
+          setPrice(product.price);
+      }
+  }, [product]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setSubmitted(true);
-        
-        const validationErrors = {};
+  useEffect(() => {
+      const validationErrors = {};
 
-        if (!name) {
-            validationErrors.name = "Name is required";
-        } else if (name.length > 200) {
-            validationErrors.name = "Name is too long";
-        }
+      if (!name?.length) {
+          validationErrors.name = "Name is required";
+      } else if (name.length > 200) {
+          validationErrors.name = "Name is too long";
+      }
 
-        if (!image && submitted) { 
-            validationErrors.image = "Image is required";
-        } else if (image && !(image instanceof File)) {
-            validationErrors.image = "An image file must be selected";
-        } else if (image instanceof File) {
-            const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-            if (!validTypes.includes(image.type)) {
-                validationErrors.image = 'Image must be in .jpeg, .jpg, .png, or .gif format';
-            }
-        }
+      // if (image instanceof File && image.name) {
+      //     if (!image.name.endsWith('.jpeg') && !image.name.endsWith('.jpg') && !image.name.endsWith('.png') && !image.name.endsWith('.gif')) {
+      //         validationErrors.image = 'Image must be in .jpeg, .jpg, .png, or .gif format';
+      //     }
+      // }
 
-        if (!description) {
-            validationErrors.description = "Description is required";
-        } else if (description.length > 255) {
-            validationErrors.description = "Description is too long";
-        }
+      if (!description?.length) {
+          validationErrors.description = "Description is required";
+      } else if (description.length > 255) {
+          validationErrors.description = "Description is too long";
+      }
 
-        if (!price) {
-            validationErrors.price = "Price is required";
-        } else if (isNaN(price) || parseFloat(price) <= 0) {
-            validationErrors.price = "Price must be a valid positive number";
-        }
+      if (!price) {
+          validationErrors.price = "Price is required";
+      } else if (isNaN(price) || parseFloat(price) <= 0) {
+          validationErrors.price = "Price must be a valid positive number";
+      }
 
-        setErrors(validationErrors);
+      setErrors(validationErrors);
+  }, [name, description, price]);
 
-        if (Object.keys(validationErrors).length === 0) {
-            const formData = new FormData();
-            formData.append("user_id", user?.id || ''); 
-            formData.append("name", name);
-            formData.append("description", description);
-            formData.append("price", price);
-            
-            if (image instanceof File) {
-                formData.append("image", image);
-            }
-            
-            const updatedProduct = await dispatch(updateProductThunk(formData, productId));
-            
-            if (!updatedProduct.errors) {
-                navigate(`/products/${productId}`);
-            }
-        }
-    };
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      setSubmitted(true);
 
+      if (Object.keys(errors).length === 0) {
+          const formData = new FormData();
+          formData.append("user_id", user?.id);
+          formData.append("name", name);
+          if (image) {
+              formData.append("image", image);
+          }
+          formData.append("description", description);
+          formData.append("price", price);
+
+          await dispatch(updateProductThunk(formData, productId));
+          navigate(`/products/${productId}`);
+      }
+  };
 
       return (
         <div>
@@ -109,7 +103,7 @@ const UpdateProduct = () => {
                   accept="image/*"
                   onChange={(e) => setImage(e.target.files[0])}
                   />
-                  {submitted && errors.image && <p style={{ color: 'red' }}>{errors.image}</p>}
+                  {/* {submitted && errors.image && <p style={{ color: 'red' }}>{errors.image}</p>} */}
               </div>
               <div>
                 <label>Product Description: </label>

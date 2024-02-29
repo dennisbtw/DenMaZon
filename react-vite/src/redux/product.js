@@ -2,9 +2,10 @@
 
 const LOAD_PRODUCTS = 'product/loadProducts';
 const LOAD_ONE_PRODUCT ='product/loadOneProduct';
+const LOAD_USER_PRODUCT = 'product/loadUserProduct';
 const CREATE_PRODUCT = 'product/CREATE_PRODUCT';
 const UPDATE_PRODUCT = 'product/UPDATE_PRODUCT';
-
+const DELETE_PRODUCT = 'product/DELETE_PRODUCT';
 // action creators
 
 const loadProducts = (products) => ({
@@ -17,6 +18,11 @@ const loadOneProduct = (product) => ({
     product
 })
 
+const loadUserProduct = (products) => ({
+    type: LOAD_USER_PRODUCT,
+    products
+})
+
 const createProduct = (product) => ({
     type: CREATE_PRODUCT,
     product
@@ -25,6 +31,11 @@ const createProduct = (product) => ({
 const updateProduct = (product) => ({
     type: UPDATE_PRODUCT,
     product
+})
+
+const deleteProduct = (productId) => ({
+    type: DELETE_PRODUCT,
+    productId
 })
 
 // thunks
@@ -52,6 +63,18 @@ export const loadOneProductThunk = (productId) => async (dispatch) => {
         return data
     }
 }
+
+// user products
+
+export const loadUserProductsThunk = (userId) => async (dispatch) => {
+    const response = await fetch(`/api/products/current/${userId}`)
+  
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(loadUserProduct(data))
+      return data
+    }
+  }
 
 // create
 
@@ -81,6 +104,20 @@ export const updateProductThunk = (product, productId) => async (dispatch) => {
     }
 }
 
+// delete
+
+export const deleteProductThunk = (productId) => async (dispatch) => {
+    const response = await fetch(`/api/products/${productId}`, {
+        method: "DELETE",
+      })
+    
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(deleteProduct(data))
+        return data
+      }
+    }
+
 // reducer
 
 const initialState = {}
@@ -100,6 +137,13 @@ const productReducer = (state = initialState, action) => {
                 [action.product.id]: action.product
             };
         }
+        case LOAD_USER_PRODUCT:{
+            const newState = {};
+            action.products.products.forEach(product => {
+                newState[product.id] = product;
+            });
+            return newState;
+        }
         case CREATE_PRODUCT:{
             return {
                 ...state,
@@ -111,7 +155,12 @@ const productReducer = (state = initialState, action) => {
                 ...state,
                 [action.product.id]: action.product
             };
-        }       
+        }
+        case DELETE_PRODUCT: {
+            const newState = { ...state };
+            delete newState[action.productId];
+            return newState;
+        }  
         default:
             return state;
     }

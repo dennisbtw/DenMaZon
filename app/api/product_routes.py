@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, request
 from app.models import Product, db
+from flask_login import current_user
 from .aws_images import upload_file_to_s3, remove_file_from_s3, get_unique_filename
 from app.forms.product_form import ProductForm
 
@@ -86,11 +87,11 @@ def oneProduct(productId):
     product = Product.query.get(productId)
     return product.to_dict()
 
-# getting current users songs
+# getting current users products
 
-@product_routes.route('/user/<int:userId>')
-def getUserProducts(userId):
-    products = Product.query.filter(Product.user_id == userId).all()
+@product_routes.route('/current')
+def getUserProducts():
+    products = Product.query.filter(Product.user_id == current_user.id).all()
 
     return {"Products":[product.to_dict() for product in products]}
 

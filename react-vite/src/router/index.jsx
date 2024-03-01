@@ -6,6 +6,7 @@ import HomePage from '../components/HomePage/HomePage';
 import ProductDetail from '../components/ProductDetail/ProductDetail';
 import CreateProduct from '../components/CreateProduct/CreateProduct';
 import UpdateProduct from '../components/UpdateProduct/UpdateProduct';
+import ManageProducts from '../components/ManageProducts/ManageProducts';
 export const router = createBrowserRouter([
   {
     element: <Layout />,
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "products/:productId/edit",
         element: <UpdateProduct/>
+      }, 
+      {
+        path: '/products/current',
+        element: <ManageProducts />
       }
     ],
   },

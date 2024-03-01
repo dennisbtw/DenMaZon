@@ -60,6 +60,8 @@ const CreateProduct = () => {
           formData.append("description", description);
           formData.append("price", price);
 
+          console.log("FORM DATA", formData)
+
     
           const product = await dispatch(createProductThunk(formData))
           navigate(`/products/${product.id}`)

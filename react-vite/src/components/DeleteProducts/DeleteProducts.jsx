@@ -9,7 +9,7 @@ const DeleteProducts = ({ product }) => {
 
     const onClick = (e) => {
         e.preventDefault();
-        return dispatch(deleteProductThunk(product))
+        return dispatch(deleteProductThunk(product.id))
         .then(closeModal)
 }
 return (

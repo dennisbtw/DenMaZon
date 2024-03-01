@@ -1,5 +1,4 @@
 // action types
-
 const LOAD_PRODUCTS = 'product/loadProducts';
 const LOAD_ONE_PRODUCT ='product/loadOneProduct';
 const LOAD_USER_PRODUCT = 'product/loadUserProduct';
@@ -66,9 +65,8 @@ export const loadOneProductThunk = (productId) => async (dispatch) => {
 
 // user products
 
-export const loadUserProductsThunk = (userId) => async (dispatch) => {
-    const response = await fetch(`/api/products/current/${userId}`)
-  
+export const loadUserProductsThunk = () => async (dispatch) => {
+    const response = await fetch('/api/products/current')
     if (response.ok) {
       const data = await response.json();
       dispatch(loadUserProduct(data))
@@ -112,9 +110,8 @@ export const deleteProductThunk = (productId) => async (dispatch) => {
       })
     
       if (response.ok) {
-        const data = await response.json();
-        dispatch(deleteProduct(data))
-        return data
+        dispatch(deleteProduct(productId))
+        return 
       }
     }
 
@@ -139,7 +136,7 @@ const productReducer = (state = initialState, action) => {
         }
         case LOAD_USER_PRODUCT:{
             const newState = {};
-            action.products.products.forEach(product => {
+            action.products.Products.forEach(product => {
                 newState[product.id] = product;
             });
             return newState;

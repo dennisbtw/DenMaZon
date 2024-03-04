@@ -32,3 +32,5 @@ const DeleteReview = ({ reviewId }) => {
     </div>
   );
 };
+
+export default DeleteReview;

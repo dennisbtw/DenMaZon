@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadReviewsThunk } from "../../redux/review";
 import { useParams } from "react-router-dom";
-import DeleteProducts from "../DeleteProducts/DeleteProducts";
+import DeleteReview from "../DeleteReviews/DeleteReview";
 import OpenModalButton from "../OpenModalButton/OpenModalButton";
 
 const ProductReviews = () => {
@@ -60,6 +60,9 @@ const ProductReviews = () => {
     return <p>No reviews available for this product.</p>;
   }
 
+
+  // console.log("THIS IS REVIEWS ---------", reviews)
+
   return (
     <div>
       {reviewsForProduct.map((review) => (
@@ -67,11 +70,11 @@ const ProductReviews = () => {
           <p>{review.review}</p>
           <p>{`${month(review.created_at)} ${year(review.created_at)}`}</p>
           <p>{renderStars(review.rating)}</p>
-          {sessionUser?.id === review.User?.id && (
+          {sessionUser?.id == review?.user_id && (
             <OpenModalButton
               buttonText="Delete"
               className="delete-button"
-              modalComponent={<DeleteProducts reviewId={review.id} />}
+              modalComponent={<DeleteReview reviewId={review.id} />}
             />
           )}
         </div>

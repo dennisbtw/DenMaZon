@@ -2,6 +2,7 @@
 
 const LOAD_REVIEWS = "review/loadReviews";
 const CREATE_REVIEWS = "review/createReviews";
+const DELETE_REVIEWS = "review/deleteReviews";
 // action creators
 
 const loadReviews = (reviews) => ({
@@ -14,8 +15,14 @@ const createReview = (review) => ({
   review,
 });
 
+const deleteReviews = (reviewId) => ({
+  type: DELETE_REVIEWS,
+  reviewId,
+});
+
 // thunks
 
+// get reviews
 export const loadReviewsThunk = (productId) => async (dispatch) => {
   const response = await fetch(`/api/reviews/${productId}`);
 
@@ -26,15 +33,33 @@ export const loadReviewsThunk = (productId) => async (dispatch) => {
   }
 };
 
+// create reviews
+
 export const createReviewThunk = (review) => async (dispatch) => {
   const response = await fetch(`/api/reviews/new-review`, {
     method: "POST",
-    body: review,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(review),
   });
   if (response.ok) {
     const data = await response.json();
     dispatch(createReview(data));
     return data;
+  }
+};
+
+// edit review
+
+// delete review
+
+export const deleteReviewsThunk = (reviewId) => async (dispatch) => {
+  const response = await fetch(`/api/reviews/${productId}/delete`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    dispatch(deleteReviews(reviewId));
+    return reviewId;
   }
 };
 // reducer
@@ -52,8 +77,13 @@ const reviewReducer = (state = initialState, action) => {
     case CREATE_REVIEWS: {
       return {
         ...state,
-        [action.review.id]: action.review
+        [action.review.id]: action.review,
       };
+    }
+    case DELETE_REVIEWS: {
+      const newState = { ...state };
+      delete newState[action.reviewId];
+      return newState;
     }
     default:
       return state;

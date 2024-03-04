@@ -1,0 +1,13 @@
+.star-filled {
+    background-image: linear-gradient(45deg, gold, gold);
+}
+.star-empty {
+    background-image: linear-gradient(45deg, grey, grey);
+}
+#rating-stars div {
+    cursor: pointer;
+    font-size: 25px;
+    display: inline-block; 
+    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text; 
+}

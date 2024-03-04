@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, request
+from flask import Blueprint, request
 from app.models import Product, db
 from flask_login import current_user
 from .aws_images import upload_file_to_s3, remove_file_from_s3, get_unique_filename

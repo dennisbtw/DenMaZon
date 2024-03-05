@@ -16,6 +16,10 @@ const ManageProducts = () => {
         dispatch(loadUserProductsThunk());
     }, [dispatch]);
 
+    const handleUpdateProduct = (productId) => {
+        navigate(`/products/${productId}/edit`);
+    };
+
     return (
         <div>
             <h2>Manage Your Products</h2>
@@ -32,6 +36,7 @@ const ManageProducts = () => {
                         className='delete-button'
                         modalComponent={<DeleteProducts product={product} />}
                     />
+                    <button onClick={() => handleUpdateProduct(product.id)}>Update Product</button>
                 </div>
             ))}
         </div>

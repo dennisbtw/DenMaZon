@@ -29,6 +29,10 @@ const ProductDetail = () => {
     }
   }, [reviews, productId]);
 
+  if (!product) {
+    return null;
+  }
+
   return (
     <div className="product-detail-wrapper">
       <div className="product-detail-top-section">

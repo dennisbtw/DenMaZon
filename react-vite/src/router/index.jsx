@@ -38,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: '/products/current',
         element: <ManageProducts />
+      },
+      {
+        path: '*',
+        element: <h2>Page Not Found</h2>
       }
     ],
   },

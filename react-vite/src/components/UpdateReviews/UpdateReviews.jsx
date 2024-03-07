@@ -16,7 +16,6 @@ const UpdateReview = ({ reviewId, initialReview, initialRating, productId }) => 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Validate review text length
     if (reviewText.length > 255) {
       setReviewError("Review text must be 255 characters or less.");
       return;
@@ -55,7 +54,7 @@ const UpdateReview = ({ reviewId, initialReview, initialRating, productId }) => 
             id="review-text-input"
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
-            placeholder="Write your review here..."
+            placeholder="Write your review here... (Minimum 10 characters)"
           />
         </label>
         <div id="rating-container">

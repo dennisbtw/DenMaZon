@@ -55,7 +55,7 @@ const CreateReview = ({ productId }) => {
             id="review-text-input"
             value={reviewText}
             onChange={(e) => setReviewText(e.target.value)}
-            placeholder="Write your review here..."
+            placeholder="Write your review here... (Minimum 10 characters)"
           />
         </label>
         <div id="rating-container">

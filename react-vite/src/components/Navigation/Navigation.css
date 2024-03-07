@@ -1,3 +1,111 @@
+/* .profile-dropdown {
+  position: absolute;
+} */
+
+.navigation-bar {
+  background-color: #1d2a3c;
+}
+
+.navigation-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.navigation-logo {
+  margin-right: 20px;
+}
+
+.denmazon-logo {
+  height: 50px;
+  cursor: pointer;
+}
+
+.profile-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  cursor: pointer;
+  justify-content: space-between;
+}
+.profile-username,
+.profile-email,
+.profile-menu-item {
+  color: black;
+}
+
+.profile-info {
+  margin-right: 10px;
+  font-size: 12px;
+  flex: 1;
+}
+.profile-dropdown-icon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+}
+
 .profile-dropdown {
   position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
+.profile-dropdown li {
+  color: black;
+  list-style-type: none;
+}
+.profile-dropdown div {
+  padding: 8px 0;
+}
+
+.profile-divider {
+  margin: 5px 0;
+}
+
+.profile-dropdown button {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation-search {
+  position: relative;
+}
+
+.navigation-search input[type="text"] {
+  padding: 10px 40px 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+  cursor: pointer;
+}
+
+.search-icon:hover {
+  color: #333;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+

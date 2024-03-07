@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaUserCircle } from 'react-icons/fa';
+import { FaShoppingCart } from "react-icons/fa";
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -13,7 +13,7 @@ function ProfileButton() {
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
   const navigate = useNavigate();
-  
+
   const toggleMenu = (e) => {
     e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
     setShowMenu(!showMenu);
@@ -39,25 +39,58 @@ function ProfileButton() {
     e.preventDefault();
     dispatch(thunkLogout());
     closeMenu();
-    navigate('/')
+    navigate("/");
+  };
+
+  const handleCartClick = () => {
+    alert("Feature coming soon!");
   };
 
   return (
-    <>
-      <button onClick={toggleMenu}>
-        <FaUserCircle />
-      </button>
+    <div className="profile-button">
+      <div className="profile-container">
+        <div className="profile-info" onClick={toggleMenu}>
+          <p className="greeting">
+            {user ? `Hello, ${user?.username}` : `Hello, Guest`}
+          </p>
+          <p className="account-list">Account & List</p>
+        </div>
+        <div>
+          <FaShoppingCart
+            className="shopping-cart-icon"
+            onClick={handleCartClick}
+          />
+        </div>
+      </div>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <div className="profile-dropdown" ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li onClick={() => {navigate(`/products/current`); closeMenu()}}>Manage Products</li>
-              <li onClick={() => {navigate(`/new-product`); closeMenu()}}>Create Product Listing</li>
-              <li>
+              <div className="profile-username">{user.username}</div>
+              <div className="profile-email">{user.email}</div>
+              <hr className="profile-divider" />
+              <div
+                className="profile-menu-item"
+                onClick={() => {
+                  navigate(`/products/current`);
+                  closeMenu();
+                }}
+              >
+                Manage Products
+              </div>
+              <div
+                className="profile-menu-item"
+                onClick={() => {
+                  navigate(`/new-product`);
+                  closeMenu();
+                }}
+              >
+                Create Product Listing
+              </div>
+              <hr className="profile-divider" />
+              <div className="profile-menu-item">
                 <button onClick={logout}>Log Out</button>
-              </li>
+              </div>
             </>
           ) : (
             <>
@@ -73,9 +106,9 @@ function ProfileButton() {
               />
             </>
           )}
-        </ul>
+        </div>
       )}
-    </>
+    </div>
   );
 }
 

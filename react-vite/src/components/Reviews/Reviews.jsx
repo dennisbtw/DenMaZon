@@ -63,6 +63,7 @@ const ProductReviews = ({ productId }) => {
           <p className="review-text">{review.review}</p>
           <p className="review-date">{`${month(review.created_at)} ${year(review.created_at)}`}</p>
           <p className="review-stars">{renderStars(review.rating)}</p>
+          <p className="review-username">By: {review.username}</p>
           {sessionUser?.id === review?.user_id && (
             <div className="review-buttons">
               <OpenModalButton

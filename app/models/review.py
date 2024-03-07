@@ -15,10 +15,13 @@ class Review(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
+    user = db.relationship('User', back_populates='reviews')
+
     def to_dict(self):
         return{
             'id': self.id,
             'user_id': self.user_id,
+            'username': self.user.username,  
             'product_id': self.product_id,
             'rating': self.rating,
             'review': self.review,

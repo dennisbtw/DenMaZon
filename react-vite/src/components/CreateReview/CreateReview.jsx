@@ -11,11 +11,16 @@ const CreateReview = ({ productId }) => {
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [reviewError, setReviewError] = useState({});
+  const [reviewError, setReviewError] = useState("");
   const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (reviewText.length > 255) {
+      setReviewError("Review text must be 255 characters or less.");
+      return;
+    }
+
     const newReview = {
       review: reviewText,
       rating: rating,
@@ -23,17 +28,14 @@ const CreateReview = ({ productId }) => {
       user_id: currentUser.id
     };
 
-    const result = await dispatch(
-      createReviewThunk(newReview)
-    );
+    const result = await dispatch(createReviewThunk(newReview));
     if (result.errors) {
-      setReviewError({ message: "Review already exists for this product" });
+      setReviewError("Review already exists for this product.");
     } else {
       setReviewText("");
       setRating(0);
       setHoverRating(0);
       closeModal();
-
       dispatch(loadOneProductThunk(productId));
     }
   };
@@ -46,7 +48,7 @@ const CreateReview = ({ productId }) => {
   return (
     <div id="create-review-modal">
       <h1>Add a written review</h1>
-      {"message" in reviewError && <p>{reviewError.message}</p>}
+      {reviewError && <p className="error-message">{reviewError}</p>}
       <form onSubmit={handleSubmit} id="create-review-form">
         <label id="review-text-label">
           <textarea

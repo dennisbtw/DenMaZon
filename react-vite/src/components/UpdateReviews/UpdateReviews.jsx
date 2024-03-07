@@ -11,11 +11,17 @@ const UpdateReview = ({ reviewId, initialReview, initialRating, productId }) => 
   const [reviewText, setReviewText] = useState(initialReview);
   const [rating, setRating] = useState(initialRating);
   const [hoverRating, setHoverRating] = useState(0);
-  const [reviewError, setReviewError] = useState({});
+  const [reviewError, setReviewError] = useState("");
   const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validate review text length
+    if (reviewText.length > 255) {
+      setReviewError("Review text must be 255 characters or less.");
+      return;
+    }
+
     const updatedReview = {
       review: reviewText,
       rating: rating,
@@ -27,7 +33,7 @@ const UpdateReview = ({ reviewId, initialReview, initialRating, productId }) => 
       editReviewThunk(updatedReview, reviewId)
     );
     if (result.errors) {
-      setReviewError({ message: "Failed to update the review" });
+      setReviewError("Failed to update the review");
     } else {
       closeModal();
       dispatch(loadOneProductThunk(productId));
@@ -42,7 +48,7 @@ const UpdateReview = ({ reviewId, initialReview, initialRating, productId }) => 
   return (
     <div id="create-review-modal">
       <h1>Update Review</h1>
-      {"message" in reviewError && <p>{reviewError.message}</p>}
+      {reviewError && <p className="error-message">{reviewError}</p>}
       <form onSubmit={handleSubmit} id="create-review-form">
         <label id="review-text-label">
           <textarea

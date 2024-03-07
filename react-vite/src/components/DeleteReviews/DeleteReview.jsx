@@ -6,11 +6,15 @@ const DeleteReview = ({ reviewId }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
 
+
+
+
   const onClick = async (e) => {
     e.preventDefault();
     await dispatch(deleteReviewsThunk(reviewId));
     closeModal();
   };
+
   return (
     <div id="delete-container">
       <h1>Confirm Delete</h1>

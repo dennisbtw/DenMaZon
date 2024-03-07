@@ -46,7 +46,7 @@ const ManageProducts = () => {
               <OpenModalButton
                 buttonText="Delete Product"
                 className="manage-delete-button"
-                modalComponent={<DeleteProducts product={product} />}
+                modalComponent={<DeleteProducts productId={product.id} />}
               />
               <button
                 className="manage-update-button"

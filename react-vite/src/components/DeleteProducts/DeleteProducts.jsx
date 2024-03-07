@@ -3,13 +3,14 @@ import { useModal } from '../../context/Modal'
 import { deleteProductThunk } from "../../redux/product";
 import './DeleteProducts.css';
 
-const DeleteProducts = ({ reviewId }) => {
+const DeleteProducts = ({ productId }) => {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
+    
     const onClick = (e) => {
         e.preventDefault();
-        return dispatch(deleteProductThunk(reviewId))
+        return dispatch(deleteProductThunk(productId))
         .then(closeModal)
 }
 return (

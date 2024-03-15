@@ -1,4 +1,29 @@
-# Flask React Project
+# Navigate the Site 
+
+## Landing Page
+* In this site, users are able to view all products.
+
+## Product Details
+* Click on any product on the landing page and it takes you to the details page. 
+* Users are able to view further information of a specific product.
+
+## Make a Product Listing
+* To make a product listing, users fill out the following information:
+* Images are required!
+* Upon making a valid product, products will automatically render on the landing page when submitted.
+* To only view the users' products, click on the profile button and click "Manage Products".
+* Users are also able to update and delete their own products.
+
+## Add a review
+* To add a review to any product, click on the "write a review" button.
+* Users are able to edit and delete their own reviews by clicking on the icons.
+# Run the site locally
+
+# Index
+* 
+* 
+*
+*
 
 This is the starter for the Flask React project.
 

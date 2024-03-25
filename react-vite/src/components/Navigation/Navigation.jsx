@@ -22,10 +22,10 @@ function Navigation() {
             alt="Denmazon Logo"
           />
         </div>
-        <div className="navigation-search" onClick={handleSearchClick}>
+        {/* <div className="navigation-search" onClick={handleSearchClick}>
           <input type="text" placeholder="Search DenMaZon"/>
           <FaSearch className="search-icon" /> 
-        </div>
+        </div> */}
         <div className="navigation-profile">
           <ProfileButton />
         </div>

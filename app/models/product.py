@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from sqlalchemy.orm import relationship
 
 class Product(db.Model):
     __tablename__ = "products"
@@ -14,6 +15,8 @@ class Product(db.Model):
     description = db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float(10, 2), nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+
+    reviews = relationship('Review', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {

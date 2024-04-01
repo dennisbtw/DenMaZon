@@ -2,13 +2,13 @@ import { useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import logo from "../../../images/DenM (2).png";
-import { FaSearch } from "react-icons/fa";
+// import { FaSearch } from "react-icons/fa";
 
 function Navigation() {
 
-  const handleSearchClick = () => {
-    alert("Feature coming soon!");
-  };
+  // const handleSearchClick = () => {
+  //   alert("Feature coming soon!");
+  // };
 
   const navigate = useNavigate();
   return (

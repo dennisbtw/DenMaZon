@@ -37,9 +37,9 @@ const ProductDetail = () => {
     }
   }, [reviews, productId]);
 
-  const handleAddToCartClick = () => {
-    alert("Feature coming soon!");
-  };
+  // const handleAddToCartClick = () => {
+  //   alert("Feature coming soon!");
+  // };
 
   if (!product) {
     return null;
@@ -73,7 +73,7 @@ const ProductDetail = () => {
           <p className="product-detail-price">
             Price: ${parseFloat(product?.price).toFixed(2)}
           </p>
-           <button className="product-detail-add-to-cart" onClick={handleAddToCartClick}>Add to Cart</button>
+           {/* <button className="product-detail-add-to-cart" onClick={handleAddToCartClick}>Add to Cart</button> */}
         </div>
       </div>
       <div className="product-detail-reviews">

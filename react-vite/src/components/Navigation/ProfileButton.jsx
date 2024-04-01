@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaShoppingCart } from "react-icons/fa";
+// import { FaShoppingCart } from "react-icons/fa";
 import { thunkLogout } from "../../redux/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
@@ -42,9 +42,9 @@ function ProfileButton() {
     navigate("/");
   };
 
-  const handleCartClick = () => {
-    alert("Feature coming soon!");
-  };
+  // const handleCartClick = () => {
+  //   alert("Feature coming soon!");
+  // };
 
   return (
     <div className="profile-button">
@@ -55,12 +55,12 @@ function ProfileButton() {
           </p>
           <p className="account-list">Account & List</p>
         </div>
-        <div>
+        {/* <div>
           <FaShoppingCart
             className="shopping-cart-icon"
             onClick={handleCartClick}
           />
-        </div>
+        </div> */}
       </div>
       {showMenu && (
         <div className="profile-dropdown" ref={ulRef}>

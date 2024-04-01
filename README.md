@@ -1,10 +1,7 @@
 # DenMaZon
 
-DenMazon is an e-commerce platform, drawing inspiration from Amazon. Where, customers have the opportunity to not only purchase wide array of products but also to engage in selling goods themselves.
+[DenMaZon](https://denmazon.onrender.com/) is an e-commerce platform, drawing inspiration from [Amazon](https://www.amazon.com/). Where, customers have the opportunity to not only purchase wide array of products but also to engage in selling goods themselves.
 
-# Live Link
-
-https://denmazon.onrender.com/
 
 ## Tech Stack
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?logo=javascript&logoColor=%23F7DF1E)

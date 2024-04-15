@@ -54,7 +54,7 @@ def seed_products():
     product7 = Product(
         user_id=1,
         name='Wireless Keyboard',
-        image='https://denmazonbucket.s3.us-west-1.amazonaws.com/onn-Mini-Compact-Wireless-Office-Keyboard-USB-Receiver-78-Keys-Gray_71d95a79-7691-4a06-ad6e-b5535fbabf44.f4f0504a2246cbdf34fe7ad55655ed6f.jpeg',
+        image='https://denmazonbucket.s3.us-west-1.amazonaws.com/GOKeyboard4-min.jpg',
         description='Type with freedom using this sleek wireless keyboard. Ergonomic design for comfortable typing experience.',
         price=49.99,
         created_at=datetime.now()
